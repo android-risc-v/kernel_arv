@@ -24,6 +24,7 @@
 #include <drm/drm_file.h>
 #include <drm/drm_fourcc.h>
 #include <drm/drm_ioctl.h>
+#include <drm/drm_modeset_helper.h>
 #include <drm/drm_of.h>
 #include <drm/drm_prime.h>
 #include <drm/drm_probe_helper.h>
