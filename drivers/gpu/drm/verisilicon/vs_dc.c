@@ -793,10 +793,15 @@ static irqreturn_t dc_isr(int irq, void *data)
 	struct vs_dc_info *dc_info = dc->hw.info;
 	u32 i, ret;
 
+	if(!dc_info)
+	  return IRQ_HANDLED;
+
 	ret = dc_hw_get_interrupt(&dc->hw);
 
-	for (i = 0; i < dc_info->panel_num; i++)
+	for (i = 0; i < dc_info->panel_num; i++) {
+	  if( (&dc->crtc[i]->base) &&  (dc->crtc[i]->base.state))
 		vs_crtc_handle_vblank(&dc->crtc[i]->base, dc_hw_check_underflow(&dc->hw));
+	}
 
 	return IRQ_HANDLED;
 }
