@@ -14,6 +14,7 @@
 #include <linux/reset.h>
 #include <linux/version.h>
 
+#include <drm/drm_atomic_helper.h>
 #include <drm/drm_aperture.h>
 #include <drm/drm_crtc.h>
 #include <drm/drm_crtc_helper.h>
@@ -238,15 +239,15 @@ static int vs_drm_platform_remove(struct platform_device *pdev)
 	return 0;
 }
 
-#ifdef CONFIG_PM_SLEEP
-static int vs_drm_suspend(struct device *dev)
+#if 1
+static int __maybe_unused vs_drm_suspend(struct device *dev)
 {
 	struct drm_device *drm = dev_get_drvdata(dev);
 
 	return drm_mode_config_helper_suspend(drm);
 }
 
-static int vs_drm_resume(struct device *dev)
+static int __maybe_unused vs_drm_resume(struct device *dev)
 {
 	struct drm_device *drm = dev_get_drvdata(dev);
 

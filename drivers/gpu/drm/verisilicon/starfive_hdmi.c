@@ -48,6 +48,7 @@ struct starfive_hdmi_i2c {
 };
 
 static const struct pre_pll_config pre_pll_cfg_table[] = {
+	{ 24000000,  24000000, 1,  100, 2, 3, 3, 12, 3, 3, 4, 0, 0},
 	{ 25175000,  25175000, 1,  100, 2, 3, 3, 12, 3, 3, 4, 0, 0xf55555},
 	{ 25200000,  25200000, 1,  100, 2, 3, 3, 12, 3, 3, 4, 0, 0},
 	{ 27000000,  27000000, 1,  90, 3, 2, 2, 10, 3, 3, 4, 0, 0},
@@ -424,14 +425,20 @@ static void starfive_hdmi_encoder_mode_set(struct drm_encoder *encoder,
 {
 	struct starfive_hdmi *hdmi = encoder_to_hdmi(encoder);
 
-	starfive_hdmi_setup(hdmi, adj_mode);
-
 	memcpy(&hdmi->previous_mode, adj_mode, sizeof(hdmi->previous_mode));
 }
 
 static void starfive_hdmi_encoder_enable(struct drm_encoder *encoder)
 {
 	struct starfive_hdmi *hdmi = encoder_to_hdmi(encoder);
+	int ret;
+
+	ret = pm_runtime_get_sync(hdmi->dev);
+	if (ret < 0)
+		return;
+	mdelay(10);
+
+	starfive_hdmi_setup(hdmi, &hdmi->previous_mode);
 
 	pm_runtime_get_sync(hdmi->dev);
 }
