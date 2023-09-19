@@ -971,7 +971,7 @@
 			interrupts = <30>;
 		};
 
-		mmc0: mmc@16010000 {
+		mmc1: mmc@16010000 {
 			compatible = "starfive,jh7110-mmc";
 			reg = <0x0 0x16010000 0x0 0x10000>;
 			clocks = <&syscrg JH7110_SYSCLK_SDIO0_AHB>,
@@ -987,7 +987,7 @@
 			status = "disabled";
 		};
 
-		mmc1: mmc@16020000 {
+		mmc0: mmc@16020000 {
 			compatible = "starfive,jh7110-mmc";
 			reg = <0x0 0x16020000 0x0 0x10000>;
 			clocks = <&syscrg JH7110_SYSCLK_SDIO1_AHB>,
